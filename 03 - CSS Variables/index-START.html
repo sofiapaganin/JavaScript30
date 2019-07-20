@@ -22,6 +22,29 @@
 
   <style>
 
+
+
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+    /* this is for declaring CSS variables. We use root to make it like a global variable: 
+     I'm not sure why we need the : in front though... */
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base);
+    }
+
+
+
+
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -45,6 +68,38 @@
   </style>
 
   <script>
+
+    const inputs = document.querySelectorAll("input");
+    
+    function handleUpdate() {
+      if (!this.dataset.sizing) {
+        sizing = '';
+      } else {
+        sizing = this.dataset.sizing;
+      }
+      //another way to do the above
+      //const sizing = this.dataset.sizing || '';
+
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + sizing);
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    // inputs.forEach(
+    //   function(input) {
+    //     input.addEventListener('change', handleUpdate);
+    //   }
+    // );
+
+    // for (let i =0; i < inputs.length; i++) {
+    //   inputs[i].addEventListener('change', handleUpdate);
+
+    // }
+    // for (puppy of inputs) {
+    //   puppy.addEventListener('change', handleUpdate);
+      // input.addEventListener('mousemove', handleUpdate);
+      // this line ^^ makes it auto-update as you drag the mouse
+    //}
+
   </script>
 
 </body>

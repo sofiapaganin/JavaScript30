@@ -22,15 +22,19 @@
     *, *:before, *:after {
       box-sizing: inherit;
     }
+    /* What is this doing? ^^^ */
 
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      /* What is this doing? ^^^ */
+      display: flex;
     }
 
     .panel {
       background: #6B0F9C;
       box-shadow: inset 0 0 0 5px rgba(255,255,255,0.1);
+      /* Inset makes the shadow appear inside the box like a border ^ */
       color: white;
       text-align: center;
       align-items: center;
@@ -40,9 +44,16 @@
         font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
         flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
         background 0.2s;
+        /* why is this red? ^ */
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      flex:1;
+      /* evenly distributes extra space */
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -53,15 +64,41 @@
 
     /* Flex Children */
     .panel > * {
+      /* All the direct children of panel class items. */
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+      flex: 1 0 auto;
+      /* why not just flex: 1? */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* why do we add this ^^^ if it still looks the same? */
+    }
+
+    .panel > *:first-child {
+      /* the :first-child selects every <p> elt that is the first child of its parent*/
+      transform: translateY(-100%);
+      /* move this element off the screen */
+    }
+
+    .panel.open-active > *:first-child {
+      transform: translateY(0);
+    }
+
+    .panel > *:last-child {
+      transform: translateY(200%);
+    }
+
+    .panel.open-active > *:last-child {
+      transform: translateY(0);
     }
 
     .panel p {
       text-transform: uppercase;
       font-family: 'Amatic SC', cursive;
       text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+      /* why are there two arguments */
       font-size: 2em;
     }
     
@@ -71,6 +108,7 @@
 
     .panel.open {
       font-size: 40px;
+      flex: 5;
     }
 
   </style>
@@ -106,8 +144,41 @@
 
   <script>
 
-  </script>
+    const panels = document.querySelectorAll('.panel');
+    // let currPanel = null;
+    function toggleSize() {
+        this.classList.toggle('open');
+        // this.classList.toggle('open-active');
+      // panels.forEach(panel => {
+        // if (panel == this) {
+          // panel.classList.toggle('open');
+          // panel.classList.toggle('open-active');
+        // } else {
+        //   panel.classList.remove('open');
+        //   panel.classList.remove('open-active');
+        // }
+      // });
+      // ^^^^^^^ This was making the old one automatically minimize
+      //         when another box is clicked.
+    }
 
+    function toggleActive(e) {
+      if (e.propertyName.includes('flex')) {
+        this.classList.toggle('open-active');
+      }
+    }
+    // Writing a separate function and eventListener for 'transitionend'
+    // gives a smoother look to the transition
+    // The new words will only show when the size is increased, 
+    // rather than at the same time. 
+
+    panels.forEach(panelElt => {
+      panelElt.addEventListener('click', toggleSize);
+    });
+
+    panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
+
+  </script>
 
 
 </body>

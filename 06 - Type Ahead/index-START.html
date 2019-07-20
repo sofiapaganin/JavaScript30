@@ -17,6 +17,87 @@
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+const cities = [];
+
+const prom = fetch(endpoint)
+  .then(blob => blob.json())
+  .then(data => cities.push(...data));
+  // ^ another option is to make cities a let variable instead of const
+  // in that case, you can write "cities = data"
+
+function findMatches(wordToMatch, cities) {
+  // console.log(cities)
+  return cities.filter(place => {
+    // console.log(place.city.includes(wordToMatch));
+    // ^ When would we use includes vs match?
+    // ANSWER: maybe something to do with html vs JSON?
+    // reference project 04
+    // console.log(typeof place.city)
+    const regex = new RegExp(wordToMatch, 'gi');
+    // console.log(regex) => /New/gi
+    // note that a RegExp object is not the same as the string that looks the same
+    // g tag looks through entire string (global)
+    // i tag looks at upper and lowercase (insensitive)
+    return place.city.match(regex) || place.state.match(regex);
+  });
+}
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function displayMatches(){
+  const matchArray = findMatches(this.value, cities);
+  const html = matchArray.map(place => {
+
+    const regex = new RegExp(this.value, 'gi');
+    const span = `<span class="hl">${this.value}</span>`;
+    const cityName = place.city.replace(regex, span);
+    const stateName = place.state.replace(regex, span);
+    const population = numberWithCommas(place.population);
+
+    return `
+      <li>
+        <span class="name">${cityName}, ${stateName}</span>
+        <span class="population">${population}</span>
+      </li>
+    `;
+  }).join('');
+  //.join turns it from an array into a string
+  suggestions.innerHTML = html;
+
+  //why are we using map?
+  //ANSWER: it's clean and nice
+
+
+  // suggestions.removeChild(suggestions.firstElementChild);
+  // suggestions.removeChild(suggestions.firstElementChild);
+  
+  // matchArray.forEach(place => {
+  //   let newSuggestion = document.createElement('li');
+  //   let newContent = document.createTextNode(place.city + ", " + place.state);
+  //   newSuggestion.appendChild(newContent);
+  //   suggestions.appendChild(newSuggestion);
+  //   let population = document.createElement('span');
+  //   let popContent = document.createTextNode(place.population);
+  //   population.appendChild(popContent);
+  //   newSuggestion.appendChild(population);
+  // })
+};
+
+const searchInput = document.querySelector('.search');
+// console.log(searchInput)
+const suggestions = document.querySelector('.suggestions');
+
+searchInput.addEventListener('change', displayMatches);
+// why not use 'input' as the event?
+// for some reason using 'input' creates a lag
+// searchInput.addEventListener('keydown', displayMatches);
+searchInput.addEventListener('keyup', displayMatches);
+// why both change and keyup and not just keyup/keydown?
+
+// why does hitting enter delete everything?
+
 </script>
 </body>
 </html>

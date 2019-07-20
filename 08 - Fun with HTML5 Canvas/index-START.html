@@ -5,13 +5,80 @@
   <title>HTML5 Canvas</title>
 </head>
 <body>
-<canvas id="draw" width="800" height="800"></canvas>
+<canvas id="draw" width="800" height="800">This is fallback content</canvas>
 <script>
+  const canvas = document.querySelector('#draw');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  ctx.strokeStyle = '#FF00FF'; 
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round'; 
+  ctx.lineWidth = 100;
+  ctx.globalCompositeOperation = 'lighten';
+  // ^ blending the overlapping colors;
+
+  
+  let isDrawing = false;
+  // why do we need isDrawing? 
+  // can't we use mouseUp and mouseDown events?
+  // this allows us to add mouseout functionality
+
+  let lastX = 0;
+  let lastY = 0;
+  let hue = 0;
+  let direction = true;
+
+  function draw(e) {
+    if (!isDrawing) return; //stop function from running when not mouse down
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+   
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+    //^ must have brackets to work properly
+    //if you put this update at the beginning of the function
+    //it will make dots instead of full lines
+    hue++
+    if (hue >= 360) {
+      hue = 0;
+    }
+    if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+      direction = !direction;
+    }
+
+    if (direction) {
+      ctx.lineWidth++;
+    } else {
+      ctx.lineWidth--;
+    }
+    // ^^^^ fancy line width stuff
+   
+
+  }
+
+  canvas.addEventListener("mousedown", () => {
+    isDrawing = true;
+    [lastX, lastY] = [this.offsetX, this.offsetY];
+  });
+
+  canvas.addEventListener("mousemove", draw);
+  // creates a fluid drawing movement
+  canvas.addEventListener("mouseup", () => isDrawing = false);
+  canvas.addEventListener("mouseout", () => isDrawing = false);
+  // ^ if the mouse exits the canvas
+
 </script>
 
 <style>
   html, body {
     margin: 0;
+  }
+  canvas {
+    border: 1px solid black;
   }
 </style>
 

@@ -12,8 +12,10 @@ body,html {
 
 .keys {
   display: flex;
-  flex: 1;
+  flex: 1; 
+  /* whats the point of this ^? */
   min-height: 100vh;
+  /* why is this here instead of something like justify-content:center on the body elt?^ */
   align-items: center;
   justify-content: center;
 }
@@ -25,11 +27,14 @@ body,html {
   font-size: 1.5rem;
   padding: 1rem .5rem;
   transition: all .07s ease;
+  /* what is this?^ */
+  /* ANSWER: it tells makes it so when we change the class, it takes 0.07 seconds to change */
   width: 10rem;
   text-align: center;
   color: white;
   background: rgba(0,0,0,0.42);
   text-shadow: 0 0 .5rem black;
+  /* this doesn't seem to be doing anything ^ */
 }
 
 .playing {
