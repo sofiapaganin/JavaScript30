@@ -106,19 +106,19 @@
   let lastCheckedItem = null;
   // represents the most recently checked item
 
-  // function markChecked(currCheckbox) {
-  //   // console.log('here', this)
-  //   //why is 'this' == window? It should be checkbox
-  //   if (currCheckbox.checked) {
-  //     lastCheckedItem = currCheckbox.parentElement;
-  //     console.log("you're in")
-  //   } else {
-  //     lastCheckedItem = currCheckbox.parentElement;
-  //     console.log("you're out");
-  //   }
-  //   //gmail uses the last modified, not just last
-  //   //checked elt - not sure which to use
-  // }
+  function markChecked(currCheckbox) {
+    // console.log('here', this)
+    //why is 'this' == window? It should be checkbox
+    if (currCheckbox.checked) {
+      lastCheckedItem = currCheckbox.parentElement;
+      console.log("you're in")
+    } else {
+      lastCheckedItem = currCheckbox.parentElement;
+      console.log("you're out");
+    }
+    //gmail uses the last modified, not just last
+    //checked elt - not sure which to use
+  }
   
   //do we need to account for people unchecking?
   //not totally sure what is the expected behavior
@@ -132,62 +132,13 @@
     } else {
       console.log("this is a click event")
       if (isShift) {
-     // if (e.shiftKey && this.checked) {
         checkAllBetween(e.target);
       }
-      // markChecked(e.target);
-      lastCheckedItem = this.parentElement;
+      markChecked(e.target);
+      lastCheckedItem = e.target.parentElement;
     }
   };
 
-  // let lastChecked;
-
-  // function handleCheck(e) {
-  //   let inBetween = false;
-  //   if (e.shiftKey && this.checked) {
-  //     checkboxes.forEach(checkbox => {
-  //       if (checkbox === this || checkbox === lastChecked) {
-  //         inBetween = !inBetween;
-  //       }
-
-  //       if(inBetween) {
-
-  //       }
-  //     })
-  //   }
-  //   lastChecked = this;
-  // };
-
-
-  // function checkAllBetween(currCheckbox) {
-  //   if (lastCheckedItem != null) {
-  //     let currCheckedItem = currCheckbox.parentElement;
-  //     let lastIndex = Array.prototype.indexOf.call(checkItems, lastCheckedItem);
-  //     let currIndex = Array.prototype.indexOf.call(checkItems, currCheckedItem);
-  //     if (lastIndex < currIndex) {
-  //       console.log('going down')
-  //       console.dir(lastCheckedItem.nextElementSibling)
-  //       while (lastIndex != currIndex) {
-  //         console.log("in the loop")
-  //         console.log(lastCheckedItem.nextElementSibling)
-  //         lastCheckedItem.nextElementSibling.firstElementChild.checked = true;
-  //         lastCheckedItem = lastCheckedItem.nextElementSibling;
-  //         lastIndex++
-  //       }
-  //     } else {
-  //       console.log('going up')
-  //       console.dir(lastCheckedItem.previousElementSibling)
-  //       while (lastIndex != currIndex) {
-  //         console.log("in the loop")
-  //         console.log(lastCheckedItem.previousElementSibling)
-  //         lastCheckedItem.previousElementSibling.firstElementChild.checked = true;
-  //         lastCheckedItem = lastCheckedItem.previousElementSibling;
-  //         lastIndex--
-  //       }
-
-  //     }
-  //   }
-  // }
   function checkAllBetween(currCheckbox) {
     if (lastCheckedItem != null) {
       let currCheckedItem = currCheckbox.parentElement;

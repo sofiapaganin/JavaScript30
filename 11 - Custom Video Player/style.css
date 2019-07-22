@@ -34,6 +34,7 @@ body {
 }
 
 .player:-webkit-full-screen {
+  /* what's this doing here? ^ */
   max-width: none;
   width: 100%;
 }
@@ -69,6 +70,7 @@ body {
   bottom: 0;
   width: 100%;
   transform: translateY(100%) translateY(-5px);
+  /*  ^ why are there two translateY? what does it mean? maybe typo */
   transition: all .3s;
   flex-wrap: wrap;
   background: rgba(0,0,0,0.1);
@@ -95,19 +97,21 @@ body {
   transition: height 0.3s;
   background: rgba(0,0,0,0.5);
   cursor: ew-resize;
+  /*  ^ makes the cursor into a side to side arrow */
 }
 
 .progress__filled {
   width: 50%;
   background: #ffc600;
   flex: 0;
-  flex-basis: 50%;
+  flex-basis: 0.1%;
+  /*  ^ represents the inital length of a flex item */
 }
 
 /* unholy css to style input type="range" */
-
 input[type=range] {
   -webkit-appearance: none;
+  /* why do we need all this webkit? */
   background: transparent;
   width: 100%;
   margin: 0 5px;
@@ -116,6 +120,7 @@ input[type=range] {
 input[type=range]:focus {
   outline: none;
 }
+/*  is there a default outline that we have to override? */
 
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
