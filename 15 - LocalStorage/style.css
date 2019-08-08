@@ -16,7 +16,7 @@ html {
 
 svg {
   fill:white;
-  background: rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.2);
   padding: 20px;
   border-radius: 50%;
   width: 200px;
@@ -60,6 +60,8 @@ h2 {
 }
 
 .plates input + label:before {
+  /* ^ the plus sign selects adjacent siblings */
+  /*  ^^ matches all label:before elements that directly follow an input */
   content: '⬜️';
   margin-right: 10px;
 }

@@ -182,6 +182,46 @@
     </li>
   </ul>
 <script>
+  const videoItems = document.querySelectorAll('[data-time]');
+  let times = [];
+  videoItems.forEach(videoItem => {
+    const minAndSec = videoItem.dataset.time.split(':');
+    times.push(minAndSec);
+  });
+  let [totalMins, totalSecs] = [0, 0];
+  times.forEach(time => {
+    totalMins += parseInt(time[0]);
+    totalSecs += parseInt(time[1]);
+  });
+
+  // const timeNodes = Array.from(document.querySelectorAll('[data-time]'));
+  // const seconds = timeNodes
+  //   .map(node => node.dataset.time)
+  //   .map(timeCode => {
+  //     const [mins, secs] = timeCode.split(':')
+  //     .map(parseFloat);
+  //     return (mins * 60) + secs;
+  //   })
+  //   .reduce((total, vidSeconds) => {
+  //     return total + vidSeconds;
+  //   })
+
+  //   let secondsLeft = seconds;
+  //   const hours = Math.floor(secondsLeft / 3600);
+  //   secondsLeft = secondsLeft % 3600;
+  //   const minutes = Math.floor(secondsLeft / 60);
+  //   secondsLeft = secondsLeft % 60;
+
+  let additionalMins = Math.floor(totalSecs / 60);
+  let remainingSecs = totalSecs % 60;
+  totalMins += additionalMins;
+  let hours = Math.floor(totalMins / 60);
+  totalMins = totalMins % 60;
+
+  console.log(hours, totalMins, remainingSecs);
+
+
+
 </script>
 </body>
 </html>

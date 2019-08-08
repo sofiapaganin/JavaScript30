@@ -7,6 +7,23 @@
 </head>
 <body>
 <script>
+  const pressed = [];
+  const secretCode = 'ponies';
+  window.addEventListener('keyup', (e) => {
+    pressed.push(e.key);
+    // if (pressed.length > secretCode.length) {
+    //   pressed.splice(1, 1);
+    // }
+
+    pressed.splice(-secretCode.length -1, pressed.length - secretCode.length);
+    // ^ this one is so confusing
+    
+    console.log(pressed)
+    if (pressed.join('').includes(secretCode)) {
+      console.log('ding');
+      cornify_add();
+    }
+  })
 </script>
 </body>
 </html>

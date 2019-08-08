@@ -32,6 +32,7 @@
         radial-gradient(black 15%, transparent 16%) 8px 8px,
         radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
         radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+        /*  ^^^^ Makes the textured background */
       background-color: #282828;
       background-size: 16px 16px;
       background-attachment: fixed;
@@ -59,6 +60,62 @@
     /*Compass: https://thenounproject.com/search/?q=compass&i=592352*/
   </style>
   <script>
+    const speed = document.querySelector('.speed-value');
+    const arrow = document.querySelector('.arrow');
+    console.log('hi')
+    navigator.geolocation.watchPosition((data) => {
+      console.log(data);
+      speed.textContent = data.coords.speed;
+      // ^ km/hr
+      arrow.style.transform = `rotate(${data.coords.heading}deg)`;
+
+    }, (err) => {
+      console.err(err);
+      alert('please allow location access')
+    });
+
+
+
+
+
+    // let lastTimestamp;
+    // let speedX = 0, speedY = 0, speedZ = 0;
+    // // ^ does this apply the "let" keyword to each variable?
+    // console.log(speedY)
+    // window.addEventListener('devicemotion', e => {
+    //   e.interval(300);
+    //   //  ^ interval of time in milisecs at which data is obtained
+    //   let currentTime = new Date().getTime();
+    //   if (lastTimestamp == undefined) {
+    //     lastTimestamp = new Date().getTime();
+    //     return;
+    //   }
+    //   speedX = (e.acceleration.x * (currentTime - lastTimestamp)) + speedX;
+    //   speedY = (e.acceleration.y * (currentTime - lastTimestamp)) + speedY;
+    //   speedZ = (e.acceleration.z * (currentTime - lastTimestamp)) + speedZ;
+    //   //  ^^^ following formula for acceleration
+    //   //  acceleration = v_f - v_i / time
+
+    //   let avgSpeed = (speedX + speedY + speedZ) / 3;
+    //   speed.innerHTML = avgSpeed;
+
+    //   lastTimestamp = currentTime;
+    // });
+
+    // function handleOrientation(event) {
+    //   console.log('changing direction');
+    //   var absolute = event.absolute;
+    //   //  ^ not sure what this is for
+    //   var alpha    = event.alpha;
+    //   //  ^ we care about alpha - the rotation rate perpendicular to device
+    //   var beta     = event.beta;
+    //   var gamma    = event.gamma;
+
+
+    // }
+
+    // window.addEventListener('deviceorientation', handleOrientation);
+
   </script>
 </body>
 </html>

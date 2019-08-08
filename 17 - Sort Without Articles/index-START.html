@@ -48,6 +48,35 @@
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+const articlesAndBands = [];
+const articles = [];
+let regex = new RegExp(/The |An |A /, 'g');
+
+bands.forEach(band => { 
+  let article = band.match(regex);
+  let articlelessBand = band.replace(regex, '');
+  // can also say bandName.replace(/^(a |the | an)/i, '').trim();
+
+  articlesAndBands.push({name: articlelessBand, art: article});
+});
+
+articlesAndBands.sort((band1, band2) => (band1.name > band2.name) ? 1 : -1);
+
+const fullBands = [];
+articlesAndBands.forEach(band => {
+  const fullBand = band.art ? band.art + band.name : band.name;
+  fullBands.push(fullBand);
+});
+
+const bandsList = document.querySelector('#bands');
+const html = fullBands.map(band => {
+  return `
+    <li>
+      ${band}
+    </li>
+  `;
+}).join('');
+bandsList.innerHTML = html;
 
 </script>
 

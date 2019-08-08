@@ -42,6 +42,25 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
+  function logText(e) {
+    console.log(this.classList.value);
+    // e.stopPropagation(); // stop bubbling!
+    // ^ capture must be false for this to work properly
+
+  }
+
+  divs.forEach(div => div.addEventListener('click',logText, {
+            capture: false, 
+            once: true
+          }));
+  // ^ capture true inhibits bubble up - runs on capture down 
+  // (one two three instead of three two one)
+
+  //  ^ if listening for a click on multiple nested elements, it triggers a click on all (bubbling up)
+
+  // once :true is equivalent to saying div.removeEventListener after the first time
+  // AKA unbinding the eventListeners
 
 </script>
 </body>

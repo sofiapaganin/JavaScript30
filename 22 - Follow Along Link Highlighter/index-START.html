@@ -27,6 +27,32 @@
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+
+    const links = document.querySelectorAll('a');
+    const highlight = document.createElement('span');
+    highlight.classList.add('highlight');
+    document.body.append(highlight);
+    //  ^ why not appendChild?
+
+    function addHighlight() {
+      console.log('highlight!')
+      console.dir(this)
+      // let width = this.offsetWidth;
+      // let height = this.offsetHeight;
+      // let x = this.offsetLeft;
+      // let y = this.offsetTop;
+      const linkCoords = this.getBoundingClientRect();
+      console.log(linkCoords)
+      highlight.style.width = `${linkCoords.width}px`
+      highlight.style.height = `${linkCoords.height}px`
+      highlight.style.transform = `translate(${window.scrollX + linkCoords.x}px, ${window.scrollY + linkCoords.y}px)`
+    }
+
+    links.forEach(link => {
+      link.addEventListener('mouseover', addHighlight);
+      //  ^ why not mousover?
+    })
+
   </script>
 </body>
 </html>

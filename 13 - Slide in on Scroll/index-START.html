@@ -43,6 +43,9 @@
   </div>
 
   <script>
+
+    
+
     function debounce(func, wait = 20, immediate = true) {
       var timeout;
       return function() {
@@ -57,13 +60,39 @@
         if (callNow) func.apply(context, args);
       };
     }
+    const images = document.querySelectorAll('.slide-in');
+    
+    function checkSlide() {
+      images.forEach(image => {
+        let showImageAt = (window.scrollY + window.innerHeight) - image.height / 2;
+        // let showImageAt = (window.scrollY + window.innerHeight) - 10;
+        console.log("showImageAt: ", showImageAt);
+        // AKA wait until you get halfway through the image to show it
+        // ^ this number changes as you scroll because of window.scrollY
+        
+        const imageBottom = image.offsetTop + image.height;
+        // AKA where the image is positioned
+        // ^ offsetTop gives how far down the page the image is
+        // ^ this number stays constant no matter where scrolled to
+
+        const isHalfShown = showImageAt > image.offsetTop;
+        const isScrolledPast = window.scrollY > imageBottom;
+        if (isHalfShown && !isScrolledPast) {
+          image.classList.add('active');
+        } else {
+          image.classList.remove('active');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', debounce(checkSlide));
 
   </script>
 
   <style>
     html {
       box-sizing: border-box;
-      background: #ffc600;
+      background: #5fb2d6;
       font-family: 'helvetica neue';
       font-size: 20px;
       font-weight: 200;
@@ -101,6 +130,7 @@
 
     .slide-in {
       opacity: 0;
+      /* What is this for? ^ Play with it */
       transition: all .5s;
     }
 
@@ -110,6 +140,7 @@
     
     .align-right.slide-in {
       transform: translateX(30%) scale(0.95);
+      /* does the % work for all right photos? ^ */
     }
 
     .slide-in.active {

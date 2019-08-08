@@ -8,7 +8,7 @@ html {
 
 html {
   font-size: 10px;
-  background: #ffc600;
+  background: #74cae4;
 }
 
 .photobooth {
@@ -28,6 +28,7 @@ html {
 .photo {
   width: 100%;
   float: left;
+  background-image: url('mypic(7).jpeg');
 }
 
 .player {
@@ -36,6 +37,7 @@ html {
   right: 20px;
   width:200px;
 }
+
 
 /*
   Strip!

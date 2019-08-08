@@ -54,7 +54,43 @@
   </div>
 
 <script>
+  const nav = document.querySelector('#main');
+  // const logo = document.querySelector('li.logo');
+  let topOfNav = nav.offsetTop;
+  // function addLogo(addLogo = true) {
+  //   if (addLogo) {
+  //     console.log('addlogo')
+  //     logo.style.maxWidth = '500px';
+  //   } else {
+  //     logo.style.maxWidth = '0';
+  //   }
+  // }
+  function positionCheck() {
+    // console.log(header.offsetHeight);
+    // console.log(nav.offsetTop)
+    if (window.scrollY >= topOfNav) {
+      // console.log('here')
+      // addLogo()
+      document.body.style.paddingTop = nav.offsetHeight+'px';
+      // nav.style.position = 'fixed';
 
+      document.body.classList.add('fixed-nav');
+      //  ^ why use body? why use a class?
+    }
+    else {
+      // addLogo(false);
+      // nav.style.position = 'relative';
+      document.body.classList.remove('fixed-nav');
+      document.body.style.paddingTop = 0;
+    }
+    // console.dir(header)
+  }
+  function updateNavHeight() {
+    console.log('resizing')
+    topOfNav = nav.offsetTop;
+  }
+  window.addEventListener('scroll', positionCheck);
+  window.addEventListener('resize', updateNavHeight);
 </script>
 
 </body>
