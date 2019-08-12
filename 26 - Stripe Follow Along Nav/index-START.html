@@ -229,55 +229,39 @@
   // const dropdown = this.querySelector('.dropdown');
 
 
-  const triggers = document.querySelectorAll('.cool > li > a');
+  const triggers = document.querySelectorAll('.cool > li');
   //  ^ he uses '.cool > li' not sure whats the difference
   const background = document.querySelector('.dropdownBackground');
-  const nav = document.querySelector('.cool');
-  //  ^ he uses '.top'
+  const nav = document.querySelector('.top');
+  //  ^ he uses '.top' but I used .cool
 
-  
-  let currEvent = null;
-
-  function handleBackground(dropdown, show = true) {
-    if (show) {
-      background.classList.add('open');
-
-      const rect = dropdown.getBoundingClientRect();
-      // console.dir(background)
-      background.style.minWidth = `${rect.width}px`;
-      console.log(rect.top)
-      background.style.height = `${rect.height}px`;
-      background.style.transform = `translate(${rect.left}px, ${rect.top + window.scrollY - nav.getBoundingClientRect().top}px)`;
-      //  ^^^^^ he uses .setProperty() - is that better than setting the style directly?
-
-    } else {
-      background.classList.remove('open');
-    }
-  }
-
-  function showDropdown(e) {
-    hideDropdown(currEvent);
-    this.parentNode.classList.add('trigger-enter');
-    setTimeout(() => this.parentNode.classList.contains('trigger-enter') && this.parentNode.classList.add('trigger-enter-active'), 150);
+  function showDropdown() {
+    // hideDropdown(currEvent);
+    this.classList.add('trigger-enter');
+    setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
     //  ^ creates animation effect
     // this.parentNode.classList.add('trigger-enter-active');
-    currEvent = e;
-    let currDropdown = this.nextElementSibling
-    handleBackground(currDropdown);
+    let dropdown = this.querySelector('.dropdown');
+    background.classList.add('open');
+
+    const rect = dropdown.getBoundingClientRect();
+    console.dir(dropdown)
+    background.style.minWidth = `${rect.width}px`;
+    background.style.height = `${rect.height}px`;
+
+    background.style.transform = `translate(${rect.left}px, ${rect.top - nav.getBoundingClientRect().top}px)`;
   }
 
-  function hideDropdown(e) {
-    if (e !== null) {
-      e.target.parentNode.classList.remove('trigger-enter', 'trigger-enter-active');
-    }
-    handleBackground(this, false);
+  function hideDropdown() {
+    this.classList.remove('trigger-enter', 'trigger-enter-active');
+    background.classList.remove('open');
   }
 
   triggers.forEach(trigger => trigger.addEventListener('mouseenter', showDropdown));
-  // triggers.forEach(trigger => trigger.addEventListener('mouseleave', hideDropdown));
+  triggers.forEach(trigger => trigger.addEventListener('mouseleave', hideDropdown));
 
 
-  dropdowns.forEach(dropdown => dropdown.addEventListener('mouseleave', hideDropdown));
+  // dropdowns.forEach(dropdown => dropdown.addEventListener('mouseleave', hideDropdown));
 
 
 

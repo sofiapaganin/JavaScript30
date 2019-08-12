@@ -35,6 +35,52 @@
   </div>
 
 <script>
+  const items = document.querySelector('.items');
+
+  
+  let clicked = false;
+  let xPos; //startX
+  let scrollLeft = items.scrollLeft;
+
+  function addAnchor(e) {
+    items.classList.add('active');
+    // console.log(e);
+    xPos = e.pageX - items.offsetLeft;
+    //  ^ he uses pageX instead of clientX
+    // it looks like clientX changes on scroll, but pageX is static
+    // ^^ subtracting items.offsetLeft accounts for margins
+    scrollLeft = items.scrollLeft;
+   
+    clicked = true;
+  }
+
+  function moveItems(e) {
+    if (clicked) {
+      const diff = (xPos - e.pageX);
+      items.scrollLeft = scrollLeft + diff;
+    }
+  }
+
+  function removeAnchor(e) {
+    items.classList.remove('active');
+    clicked = false;
+    // xPos = 0;
+    // console.log(e.clientX)
+    // xPos = e.clientX;
+  }
+
+  items.addEventListener('mousedown', addAnchor);
+
+  items.addEventListener('mouseleave', () => {
+    clicked = false;
+    items.classList.remove('active');
+    scrollLeft = items.scrollLeft
+  });
+
+  items.addEventListener('mousemove', moveItems)
+
+  items.addEventListener('mouseup', removeAnchor);
+
 </script>
 
   </body>
