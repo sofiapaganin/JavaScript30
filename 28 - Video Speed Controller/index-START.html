@@ -15,6 +15,30 @@
   </div>
 
 <script>
+  const speed = document.querySelector('.speed');
+  const video = document.querySelector('.flex');
+
+  function updateSpeed(e) {
+    // 1) change bar size
+    const bar = this.querySelector('.speed-bar'); 
+    maxHeight = speed.offsetHeight;
+    let fraction = (e.offsetY/maxHeight)
+    //  ^ he uses (e.pageY - this.offsetTop)/ this.offsetHeight
+    //  ^^ that is to account for margins
+    bar.style.height = `${fraction*100}%`;
+
+    // 2) change innerHTML of speed-bar
+    let speedValue = (fraction*3).toFixed(2);
+    // ^ toFixed is like Math.Round but with specific # of digits
+    speed.firstElementChild.innerHTML = `${speedValue}×`
+
+    // 3) change speed of video
+    video.playbackRate = speedValue;
+  }
+
+  speed.addEventListener('mousemove', updateSpeed);
+
+
 </script>
 </body>
 </html>
