@@ -237,11 +237,15 @@
 
   function showDropdown() {
     // hideDropdown(currEvent);
+
     this.classList.add('trigger-enter');
     setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
     //  ^ creates animation effect
     // this.parentNode.classList.add('trigger-enter-active');
     let dropdown = this.querySelector('.dropdown');
+    console.dir(dropdown.style)
+    //  ^ why doesn't the styling show here?
+
     background.classList.add('open');
 
     const rect = dropdown.getBoundingClientRect();
